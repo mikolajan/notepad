@@ -1,6 +1,6 @@
 # encoding: UTF-8
 #
-# Программа по хранению информации о билете
+# Программа по созданию и записи постов
 #
 # (с) mikolajan when studying RubyRush.ru
 
@@ -14,4 +14,28 @@ if Gem.win_platform?
   end
 end
 
+require_relative 'post.rb'
+require_relative 'link.rb'
+require_relative 'memo.rb'
+require_relative 'task.rb'
 
+puts "Что хотите записать в блокнот?"
+
+choices = Post.post_types
+
+choice = -1
+
+until choice >= 0 && choice < choices.size
+
+  choices.each_with_index { |type, index| puts "#{index}. #{type}"}
+
+  choice = STDIN.gets.chomp.to_i
+end
+
+entry = Post.create(choice)
+
+entry.read_from_console
+
+entry.save
+
+puts 'ура, запись сохранена!'
